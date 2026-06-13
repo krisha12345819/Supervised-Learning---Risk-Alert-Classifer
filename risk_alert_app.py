@@ -232,11 +232,12 @@ PLOTLY_LAYOUT = dict(
         bordercolor="rgba(99,179,237,0.2)",
         borderwidth=1
     ),
-    xaxis=dict(gridcolor="rgba(99,179,237,0.08)", linecolor="rgba(99,179,237,0.2)"),
-    yaxis=dict(gridcolor="rgba(99,179,237,0.08)", linecolor="rgba(99,179,237,0.2)"),
     colorway=["#63b3ed", "#fc8181", "#68d391", "#f6ad55", "#b794f4", "#76e4f7"],
-    margin=dict(t=50, b=40, l=40, r=20),
 )
+
+# Reusable helpers — applied per-chart to avoid duplicate-key conflicts
+AXIS_STYLE    = dict(gridcolor="rgba(99,179,237,0.08)", linecolor="rgba(99,179,237,0.2)")
+MARGIN_DEF    = dict(t=50, b=40, l=40, r=20)
 
 COLORS = {
     "primary":   "#63b3ed",
@@ -499,7 +500,8 @@ with tab1:
             textfont=dict(color="#e2e8f0"),
         ))
         fig_pie.update_layout(**PLOTLY_LAYOUT, title="Class Split", height=300,
-                              showlegend=True, margin=dict(t=40, b=20, l=20, r=20))
+                              showlegend=True,
+                              margin=dict(t=40, b=20, l=20, r=20))
         st.plotly_chart(fig_pie, use_container_width=True)
 
     with cc2:
@@ -514,7 +516,8 @@ with tab1:
             labels={"risk_status": "Risk"},
             opacity=0.75,
         )
-        fig_hist.update_layout(**PLOTLY_LAYOUT, title=f"{sel_feat} by Risk Class", height=300)
+        fig_hist.update_layout(**PLOTLY_LAYOUT, title=f"{sel_feat} by Risk Class", height=300,
+                               xaxis=AXIS_STYLE, yaxis=AXIS_STYLE, margin=MARGIN_DEF)
         st.plotly_chart(fig_hist, use_container_width=True)
 
     st.markdown("<div class='section-header'>Feature Importances (Random Forest)</div>", unsafe_allow_html=True)
@@ -524,8 +527,10 @@ with tab1:
         color_continuous_scale=[[0, "#1a3a5c"], [0.5, "#2b6cb0"], [1, "#63b3ed"]],
     )
     fig_fi.update_layout(**PLOTLY_LAYOUT, title="Top 12 Feature Importances", height=380,
-                         coloraxis_showscale=False, yaxis=dict(autorange="reversed",
-                         gridcolor="rgba(99,179,237,0.08)", linecolor="rgba(99,179,237,0.2)"))
+                         coloraxis_showscale=False,
+                         xaxis=AXIS_STYLE,
+                         yaxis=dict(autorange="reversed", **AXIS_STYLE),
+                         margin=MARGIN_DEF)
     st.plotly_chart(fig_fi, use_container_width=True)
 
     st.markdown("<div class='section-header'>Correlation Heatmap</div>", unsafe_allow_html=True)
@@ -538,7 +543,8 @@ with tab1:
         zmin=-1, zmax=1, aspect="auto",
         color_continuous_midpoint=0,
     )
-    fig_corr.update_layout(**PLOTLY_LAYOUT, title="Pearson Correlation Matrix", height=420)
+    fig_corr.update_layout(**PLOTLY_LAYOUT, title="Pearson Correlation Matrix", height=420,
+                           margin=MARGIN_DEF)
     st.plotly_chart(fig_corr, use_container_width=True)
 
     if "region" in df.columns:
@@ -551,7 +557,8 @@ with tab1:
             color_continuous_scale=[[0, "#276749"], [0.5, "#f6ad55"], [1, "#c53030"]],
         )
         fig_reg.update_layout(**PLOTLY_LAYOUT, title="High Risk Rate by Region",
-                              coloraxis_showscale=False, height=320)
+                              coloraxis_showscale=False, height=320,
+                              xaxis=AXIS_STYLE, yaxis=AXIS_STYLE, margin=MARGIN_DEF)
         st.plotly_chart(fig_reg, use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -576,7 +583,8 @@ with tab2:
         color_discrete_sequence=[COLORS["primary"], COLORS["warning"], COLORS["success"]],
     )
     fig_bar.update_layout(**PLOTLY_LAYOUT, title="All Models — All Metrics", height=380,
-                          yaxis_range=[0, 1.05])
+                          yaxis=dict(range=[0, 1.05], **AXIS_STYLE),
+                          xaxis=AXIS_STYLE, margin=MARGIN_DEF)
     st.plotly_chart(fig_bar, use_container_width=True)
 
     # ROC Curves
@@ -595,7 +603,9 @@ with tab2:
     ))
     fig_roc.update_layout(
         **PLOTLY_LAYOUT, title="ROC Curve Comparison", height=400,
-        xaxis_title="False Positive Rate", yaxis_title="True Positive Rate",
+        xaxis=dict(title="False Positive Rate", **AXIS_STYLE),
+        yaxis=dict(title="True Positive Rate", **AXIS_STYLE),
+        margin=MARGIN_DEF,
     )
     st.plotly_chart(fig_roc, use_container_width=True)
 
@@ -617,6 +627,7 @@ with tab2:
                 **PLOTLY_LAYOUT,
                 title=name, height=280,
                 coloraxis_showscale=False,
+                xaxis=AXIS_STYLE, yaxis=AXIS_STYLE,
                 margin=dict(t=45, b=30, l=30, r=20),
             )
             st.plotly_chart(fig_cm, use_container_width=True)
@@ -647,7 +658,10 @@ with tab3:
     )
     fig_bal.update_layout(**PLOTLY_LAYOUT,
                           title="Recall · F1 · AUC-ROC by Balancing Method",
-                          height=380, yaxis_range=[0, 1.05])
+                          height=380,
+                          xaxis=AXIS_STYLE,
+                          yaxis=dict(range=[0, 1.05], **AXIS_STYLE),
+                          margin=MARGIN_DEF)
     st.plotly_chart(fig_bal, use_container_width=True)
 
     c1, c2 = st.columns(2)
@@ -657,7 +671,8 @@ with tab3:
             color_discrete_sequence=[COLORS["danger"]],
         )
         fig_recall.update_traces(marker=dict(size=9, symbol="circle"))
-        fig_recall.update_layout(**PLOTLY_LAYOUT, title="Recall Improvement", height=300)
+        fig_recall.update_layout(**PLOTLY_LAYOUT, title="Recall Improvement", height=300,
+                                  xaxis=AXIS_STYLE, yaxis=AXIS_STYLE, margin=MARGIN_DEF)
         st.plotly_chart(fig_recall, use_container_width=True)
 
     with c2:
@@ -666,7 +681,8 @@ with tab3:
             color_discrete_sequence=[COLORS["teal"]],
         )
         fig_auc.update_traces(marker=dict(size=9, symbol="diamond"))
-        fig_auc.update_layout(**PLOTLY_LAYOUT, title="AUC-ROC Improvement", height=300)
+        fig_auc.update_layout(**PLOTLY_LAYOUT, title="AUC-ROC Improvement", height=300,
+                               xaxis=AXIS_STYLE, yaxis=AXIS_STYLE, margin=MARGIN_DEF)
         st.plotly_chart(fig_auc, use_container_width=True)
 
     st.markdown("<div class='section-header'>Class Distribution After Balancing</div>",
@@ -686,7 +702,8 @@ with tab3:
         color_discrete_map={"Low Risk": COLORS["success"], "High Risk": COLORS["danger"]},
     )
     fig_dist.update_layout(**PLOTLY_LAYOUT,
-                           title="Approximate Class Sizes After Each Method", height=340)
+                           title="Approximate Class Sizes After Each Method", height=340,
+                           xaxis=AXIS_STYLE, yaxis=AXIS_STYLE, margin=MARGIN_DEF)
     st.plotly_chart(fig_dist, use_container_width=True)
 
     st.dataframe(bal_df.style.highlight_max(
@@ -868,9 +885,9 @@ with tab4:
             title="Top 10 Contributing Features",
             height=340,
             coloraxis_showscale=False,
-            yaxis=dict(autorange="reversed",
-                       gridcolor="rgba(99,179,237,0.08)",
-                       linecolor="rgba(99,179,237,0.2)"),
+            xaxis=AXIS_STYLE,
+            yaxis=dict(autorange="reversed", **AXIS_STYLE),
+            margin=MARGIN_DEF,
         )
         st.plotly_chart(fig_contrib, use_container_width=True)
 
