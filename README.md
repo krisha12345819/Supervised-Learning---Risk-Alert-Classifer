@@ -20,6 +20,21 @@
 
 ---
 
+## 🌐 Live Web Application
+
+🚀 Try the deployed Streamlit application:
+
+👉 **https://supervised-learning---risk-alert-classifer.streamlit.app/**
+
+### Features
+- Predict customer risk levels instantly
+- Interactive dashboard
+- Model performance visualization
+- Risk analysis and insights
+- User-friendly interface
+
+---
+
 ## 📌 Table of Contents
 
 - [Overview](#-overview)
