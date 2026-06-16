@@ -28,13 +28,7 @@
 
 ## 🎥 Demo
 
-<p align="center">
-  <img src="./images/demo.gif" alt="Demo" width="900">
-</p>
-
-<p align="center">
-  <a href="./images/Risk-Alert-Classifier.mp4">▶️ Watch Full Video</a>
-</p>
+https://github.com/user-attachments/assets/39641c99-c8d7-4041-a05f-fcbcb1ce8754
 
 ### Features
 - Predict customer risk levels instantly
