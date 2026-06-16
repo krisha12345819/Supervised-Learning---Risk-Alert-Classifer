@@ -28,11 +28,13 @@
 
 ## 🎥 Demo
 
-[![Watch Demo]](./images/Risk-Alert-Classifier.mp4)
+<p align="center">
+  <img src="./images/demo.gif" alt="Demo" width="900">
+</p>
 
-## 🎥 Demo
-
-[▶️ Watch Demo](https://github.com/your-username/risk-alert-classifier/blob/main/images/Risk-Alert-Classifier.mp4)
+<p align="center">
+  <a href="./images/Risk-Alert-Classifier.mp4">▶️ Watch Full Video</a>
+</p>
 
 ### Features
 - Predict customer risk levels instantly
