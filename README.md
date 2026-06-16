@@ -30,6 +30,10 @@
 
 [![Watch Demo]](./images/Risk-Alert-Classifier.mp4)
 
+## 🎥 Demo
+
+[▶️ Watch Demo](https://github.com/your-username/risk-alert-classifier/blob/main/images/Risk-Alert-Classifier.mp4)
+
 ### Features
 - Predict customer risk levels instantly
 - Interactive dashboard
