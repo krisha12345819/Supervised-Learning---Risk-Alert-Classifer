@@ -28,7 +28,7 @@
 
 ## 🎥 Demo
 
-[![Watch Demo](./images/demo-thumbnail.png)](./images/Risk-Alert-Classifier.mp4)
+[![Watch Demo]](./images/Risk-Alert-Classifier.mp4)
 
 ### Features
 - Predict customer risk levels instantly
